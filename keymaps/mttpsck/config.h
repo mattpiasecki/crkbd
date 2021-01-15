@@ -36,12 +36,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USE_SERIAL_PD2
 
-#define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 100
+#define TAPPING_TERM 200
 
-#define IGNORE_MOD_TAP_INTERRUPT //helps with homerow mods
-
-#define COMBO_COUNT 5
+#define COMBO_COUNT 3
 #define COMBO_TERM 30
 
 #ifdef RGBLIGHT_ENABLE

@@ -28,27 +28,19 @@ enum layers{
 enum combo_events {
   COMBO_BSPC,
   COMBO_NUMBAK,
-  COMBO_TAB,
-  COMBO_ESC,
   COMBO_DEL,
 };
 
 #define KC_LTSBS LT(_SYM, KC_BSPC)
-#define KC_GA LGUI_T(KC_A)
-#define KC_AS LALT_T(KC_S)
-#define KC_CD LCTL_T(KC_D)
-#define KC_SF LSFT_T(KC_F)
-#define KC_SJ RSFT_T(KC_J)
-#define KC_CK RCTL_T(KC_K)
-#define KC_AL RALT_T(KC_L)
-#define KC_GSCLN RGUI_T(KC_SCLN)
+#define KC_CTAB LCTL_T(KC_TAB)
+#define KC_CENT LCTL_T(KC_ENT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_GESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_LBRC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       KC_TAB,  KC_GA,    KC_AS,   KC_CD,   KC_SF,    KC_G,                         KC_H,   KC_SJ,   KC_CK,   KC_AL,KC_GSCLN,  KC_ENT,
+      KC_CTAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, KC_CENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSPO,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSPC,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -61,11 +53,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
     _______,S(KC_PGUP),S(KC_HOME),S(KC_UP),S(KC_END),XXXXXXX,                    KC_PGUP, KC_HOME,   KC_UP,  KC_END, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    _______,S(KC_PGDN),S(C(KC_LEFT)),S(KC_DOWN),S(C(KC_RGHT)),XXXXXXX,           KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, _______,
+    _______,S(KC_PGDN),S(C(KC_LEFT)),S(KC_DOWN),S(C(KC_RGHT)),XXXXXXX,           KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_SCLN, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
+                                          _______, _______, _______,     KC_DEL, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -73,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      KC_TAB, KC_QUOT,C(S(A(G(KC_W)))),KC_EQL,KC_F5,KC_TILD,                      XXXXXXX, KC_UNDS, KC_EXLM, XXXXXXX, KC_PERC, KC_RBRC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,   KC_AT, KC_MINS,  KC_DLR, XXXXXXX, XXXXXXX,                     KC_HASH,S(A(KC_TAB)),A(KC_TAB),KC_PIPE,XXXXXXX,XXXXXXX,
+      KC_CAPS,   KC_AT, KC_MINS,  KC_DLR, XXXXXXX, XXXXXXX,                     KC_HASH,S(A(KC_TAB)),A(KC_TAB),KC_PIPE,KC_SCLN,XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, KC_ASTR, XXXXXXX, KC_CIRC, KC_AMPR,                      XXXXXXX, XXXXXXX, _______, _______, KC_BSLS, _______,
+      KC_LSFT, XXXXXXX, KC_ASTR, XXXXXXX, KC_CIRC, KC_AMPR,                     KC_NLCK, XXXXXXX, _______, _______, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,TG(_NUM), _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -96,16 +88,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM combo_bspc[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM combo_numbak[] = {KC_0, KC_ASTR, COMBO_END};
-const uint16_t PROGMEM combo_tab[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM combo_esc[] = {KC_E, KC_W, COMBO_END};
-const uint16_t PROGMEM combo_del[] = {KC_P, KC_RBRC, COMBO_END};
+const uint16_t PROGMEM combo_numbak[] = {KC_9, KC_ASTR, COMBO_END};
+const uint16_t PROGMEM combo_del[] = {KC_P, KC_LBRC, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [COMBO_BSPC] = COMBO(combo_bspc,KC_BSPC),
   [COMBO_NUMBAK] = COMBO(combo_numbak,KC_BSPC),
-  [COMBO_TAB] = COMBO(combo_tab,KC_TAB),
-  [COMBO_ESC] = COMBO(combo_esc,KC_ESC),
   [COMBO_DEL] = COMBO(combo_del,KC_DEL),
 };
 #endif
@@ -124,6 +112,7 @@ void render_corne_logo(void) {
         0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4,
         0};
+    oled_clear();
     oled_write_P(crkbd_logo, false);
 };
 
@@ -156,7 +145,7 @@ static void render_wpm_graph(void) {
 	    // there is a whole screen worth, turn the display off and
 	    // wait until there is something to do
 	    if (zero_bar_count > (OLED_DISPLAY_WIDTH/32)) {
-            //render_YOUR_logo();
+            render_corne_logo();
 		return;
 	    }
 	    zero_bar_count++;
@@ -300,6 +289,7 @@ void oled_task_user(void) {
         // oled_render_layer_state();
         // oled_render_keylog();
         sprintf(wpm_str, "WPM: %03d", get_current_wpm());
+        oled_write(wpm_str,false);
         oled_set_cursor(0,3);
         render_layer_status();	// Renders the current keyboard state (layer, lock, caps, scroll, etc)
 	    render_mod_status(get_mods()|get_oneshot_mods());
