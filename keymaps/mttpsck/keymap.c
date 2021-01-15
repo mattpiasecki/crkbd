@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_CAPS,   KC_AT, KC_MINS,  KC_DLR, XXXXXXX, XXXXXXX,                     KC_HASH,S(A(KC_TAB)),A(KC_TAB),KC_PIPE,KC_SCLN,XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, KC_ASTR, XXXXXXX, KC_CIRC, KC_AMPR,                     KC_NLCK, XXXXXXX, _______, _______, KC_BSLS, _______,
+      _______, XXXXXXX, KC_ASTR, XXXXXXX, KC_CIRC, KC_AMPR,                     KC_NLCK, XXXXXXX,C(G(KC_LEFT)),C(G(KC_RGHT)), KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,TG(_NUM), _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -112,7 +112,6 @@ void render_corne_logo(void) {
         0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4,
         0};
-    oled_clear();
     oled_write_P(crkbd_logo, false);
 };
 
@@ -145,7 +144,8 @@ static void render_wpm_graph(void) {
 	    // there is a whole screen worth, turn the display off and
 	    // wait until there is something to do
 	    if (zero_bar_count > (OLED_DISPLAY_WIDTH/32)) {
-            render_corne_logo();
+            oled_clear();
+            wpm_graph_timer = 0;
 		return;
 	    }
 	    zero_bar_count++;
@@ -296,7 +296,7 @@ void oled_task_user(void) {
 	    render_keylock_status(host_keyboard_led_state());
 	    render_keylogger_status();
     } else {
-        render_wpm_graph();
+        get_current_wpm() > 0 ? render_wpm_graph() : render_corne_logo();
     }
 }
 
